@@ -1,0 +1,135 @@
+1. dbLoadDB.php
+ 
+This returns the full addressbookDB table wrapped in XML.
+ 
+<?php
+  $db = new mysqli ("194.81.104.22", "espen", "XXXXXXXX", "db_espen");
+ 
+  $query = "SELECT * from addressbookDB";
+  //$result = mysqli_query ($link, $query);
+  $result = $db->query ($query);
+ 
+  print ("<?xml version=\"1.0\" ?>");
+  print "\n<database>\n";
+ 
+  while($row = mysqli_fetch_object($result))
+  {       
+    print " <record>\n";
+    print "  <id>$row->id</id>\n";
+    print "  <firstname>$row->firstname</firstname>\n";
+    print "  <lastname>$row->lastname</lastname>\n";
+    print "  <address>$row->address</address>\n";
+    print "  <telephone>$row->telephone</telephone>\n";
+    print " </record>\n";
+  }
+  print "</database>\n";
+  $db->close();
+?>
+ 
+ 
+2. dbAddDB.php
+ 
+This passes a new record to the script which is then appended to the addressbookDB table.
+ 
+<?php
+  $db = new mysqli ("194.81.104.22", "espen", "XXXXXXXX", "db_espen");
+ 
+  $firstname = $_GET['firstname'];
+  $lastname = $_GET['lastname'];
+  $address = $_GET['address'];
+  $telephone = $_GET['telephone'];
+ 
+   
+  $query = "insert into addressbookDB (firstname, lastname, address, telephone) values ('$firstname', '$lastname', '$address', '$telephone');";
+  $result = $db->query ($query);
+ 
+  $query = "SELECT * from addressbookDB";
+  $result = $db->query ($query);
+ 
+  print ("<?xml version=\"1.0\" ?>");
+  print "\n<database>\n";
+ 
+  while($row = mysqli_fetch_object($result))
+  {       
+    print " <record>\n";
+    print "  <id>$row->id</id>\n";
+    print "  <firstname>$row->firstname</firstname>\n";
+    print "  <lastname>$row->lastname</lastname>\n";
+    print "  <address>$row->address</address>\n";
+    print "  <telephone>$row->telephone</telephone>\n";
+    print " </record>\n";
+  }
+  print "</database>\n";
+  $db->close();
+?>
+ 
+ 
+3. dbUpdateDB.php
+ 
+This passes the updated fields of a record to be updated in the addressbookDB table.
+ 
+<?php
+  $db = new mysqli ("194.81.104.22", "espen", "XXXXXXX", "db_espen");
+ 
+  $id = $_GET['id'];
+  $firstname = $_GET['firstname'];
+  $lastname = $_GET['lastname'];
+  $address = $_GET['address'];
+  $telephone = $_GET['telephone'];
+ 
+  $query = "update addressbookDB set firstname='$firstname', lastname='$lastname', address='$address', telephone='$telephone' where id='$id'";
+  $result = $db->query ($query);
+ 
+  $query2 = "SELECT * from addressbookDB";
+  $result = $db->query ($query2);
+ 
+  print ("<?xml version=\"1.0\" ?>");
+  print "\n<database>\n";
+ 
+  while($row = mysqli_fetch_object($result))
+  {       
+    print " <record>\n";
+    print "  <id>$row->id</id>\n";
+    print "  <firstname>$row->firstname</firstname>\n";
+    print "  <lastname>$row->lastname</lastname>\n";
+    print "  <address>$row->address</address>\n";
+    print "  <telephone>$row->telephone</telephone>\n";
+    print " </record>\n";
+  }
+  print "</database>\n";
+  $db->close();
+?>
+
+4. dbDeleteDB.php
+
+<?php
+  $db = new mysqli ("194.81.104.22", "", "", "");
+
+  $id = $_GET['id'];
+  $firstname = $_GET['firstname'];
+  $lastname = $_GET['lastname'];
+  $address = $_GET['address'];
+  $telephone = $_GET['telephone'];
+
+  $query = "delete from  addressbookDB  where id='$id'";
+  $result = $db->query ($query);
+
+  $query2 = "SELECT * from addressbookDB";
+  $result = $db->query ($query2);
+
+  print ("<?xml version=\"1.0\" ?>");
+  print "\n<database>\n";
+
+  while($row = mysqli_fetch_object($result))
+  {
+    print " <record>\n";
+    print "  <id>$row->id</id>\n";
+    print "  <firstname>$row->firstname</firstname>\n";
+    print "  <lastname>$row->lastname</lastname>\n";
+    print "  <address>$row->address</address>\n";
+    print "  <telephone>$row->telephone</telephone>\n";
+    print " </record>\n";
+  }
+  print "</database>\n";
+  $db->close();
+?>
