@@ -53,7 +53,7 @@ class AddressbookList
 
     public static void init (int n)
     {
-        addressbookEntry = null; // OLD RECORDS IS NOW GARBAGE
+        addressbookEntry = null; // OLD RECORDS IS NOW GARBAGE --
         addressbookEntry = new AddressbookEntry[n];
         count = n;
     }
